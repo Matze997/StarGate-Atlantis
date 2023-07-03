@@ -34,7 +34,6 @@ class StarGateSocket {
     private string $address;
     /** @var int */
     private int $port;
-    /** @var string */
 
     /**
      * StarGateSocket constructor.

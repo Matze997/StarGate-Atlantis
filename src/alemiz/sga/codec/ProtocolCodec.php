@@ -39,7 +39,7 @@ class ProtocolCodec {
     public const STARGATE_MAGIC = 0xa20;
 
     /** @var StarGatePacket[] */
-    private $packetPool = [];
+    private array $packetPool = [];
 
     /**
      * ProtocolCodec constructor.

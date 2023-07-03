@@ -117,9 +117,7 @@ class StarGateClient extends Task {
      * @param StarGatePacket $packet
      */
     public function sendPacket(StarGatePacket $packet) : void {
-        if ($this->session !== null){
-            $this->session->sendPacket($packet);
-        }
+        $this->session?->sendPacket($packet);
     }
 
     /**
@@ -127,20 +125,14 @@ class StarGateClient extends Task {
      * @return PacketResponse|null
      */
     public function responsePacket(StarGatePacket $packet) : ?PacketResponse {
-        if ($this->session !== null){
-            return $this->session->responsePacket($packet);
-        }
-        return null;
+        return $this->session?->responsePacket($packet);
     }
 
     public function shutdown() : void {
         if (!$this->isConnected()){
             return;
         }
-
-        if ($this->session !== null){
-            $this->session->disconnect(DisconnectPacket::CLIENT_SHUTDOWN);
-        }
+        $this->session?->disconnect(DisconnectPacket::CLIENT_SHUTDOWN);
     }
 
     /**

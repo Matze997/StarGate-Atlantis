@@ -23,11 +23,11 @@ use alemiz\sga\protocol\types\PacketHelper;
 class PlayerPingResponsePacket extends StarGatePacket {
 
     /** @var string */
-    private $playerName;
+    private string $playerName;
     /** @var int */
-    private $upstreamPing;
+    private int $upstreamPing;
     /** @var int */
-    private $downstreamPing;
+    private int $downstreamPing;
 
     public function encodePayload() : void {
         PacketHelper::writeString($this, $this->playerName);

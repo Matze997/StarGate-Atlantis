@@ -191,9 +191,7 @@ class ClientSession {
      * @noinspection PhpExpressionResultUnusedInspection
      */
     public function pingServer(int $timeout) : StarGateFuture {
-        if ($this->pingEntry !== null){
-            $this->pingEntry->getFuture();
-        }
+        $this->pingEntry?->getFuture();
 
         $now = (int) microtime(true) * 1000;
         $entry = new PingEntry(new StarGateFuture(), $now + $timeout);
