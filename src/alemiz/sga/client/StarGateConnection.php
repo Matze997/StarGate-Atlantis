@@ -19,10 +19,10 @@ namespace alemiz\sga\client;
 use alemiz\sga\codec\ProtocolCodec;
 use alemiz\sga\protocol\types\HandshakeData;
 use alemiz\sga\utils\StarGateException;
+use pmmp\thread\ThreadSafeArray;
+use pocketmine\thread\log\ThreadSafeLogger;
 use pocketmine\thread\Thread;
 use pocketmine\utils\Binary;
-use Threaded;
-use ThreadedLogger;
 use function socket_read;
 use function strlen;
 use function substr;
@@ -37,8 +37,8 @@ class StarGateConnection extends Thread {
     public const STATE_AUTHENTICATED = 4;
     public const STATE_SHUTDOWN = 5;
 
-    /** @var ThreadedLogger */
-    private ThreadedLogger $logger;
+    /** @var ThreadSafeLogger */
+    private ThreadSafeLogger $logger;
     /** @var StarGateSocket */
     private StarGateSocket $starGateSocket;
 
@@ -52,10 +52,10 @@ class StarGateConnection extends Thread {
     /** @var HandshakeData */
     private HandshakeData $handshakeData;
 
-    /** @var Threaded */
-    private Threaded $input;
-    /** @var Threaded */
-    private Threaded $output;
+    /** @var ThreadSafeArray */
+    private ThreadSafeArray $input;
+    /** @var ThreadSafeArray */
+    private ThreadSafeArray $output;
 
     /** @var string */
     private string $buffer = "";
@@ -65,20 +65,20 @@ class StarGateConnection extends Thread {
 
     /**
      * StarGateConnection constructor.
-     * @param ThreadedLogger $logger
+     * @param ThreadSafeLogger $logger
      * @param string $address
      * @param int $port
      * @param HandshakeData $handshakeData
      */
-    public function __construct(ThreadedLogger $logger, string $address, int $port, HandshakeData $handshakeData){
+    public function __construct(ThreadSafeLogger $logger, string $address, int $port, HandshakeData $handshakeData){
         $this->logger = $logger;
         $this->address = $address;
         $this->port = $port;
         $this->handshakeData = $handshakeData;
         $this->starGateSocket = new StarGateSocket($this, $this->address, $this->port);
 
-        $this->input = new Threaded();
-        $this->output = new Threaded();
+        $this->input = new ThreadSafeArray();
+        $this->output = new ThreadSafeArray();
         $this->start(PTHREADS_INHERIT_NONE);
     }
 
@@ -297,9 +297,9 @@ class StarGateConnection extends Thread {
     }
 
     /**
-     * @return ThreadedLogger
+     * @return ThreadSafeLogger
      */
-    public function getLogger(): ThreadedLogger {
+    public function getLogger(): ThreadSafeLogger {
         return $this->logger;
     }
 

@@ -38,7 +38,7 @@ class StarGateClient extends Task {
     /** @var Server */
     private Server $server;
     /** @var PluginLogger */
-    private $logger;
+    private PluginLogger $logger;
 
     /** @var ProtocolCodec */
     private ProtocolCodec $protocolCodec;

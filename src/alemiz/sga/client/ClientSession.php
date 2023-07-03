@@ -45,7 +45,7 @@ class ClientSession {
     private array $pendingResponses = [];
 
     /** @var StarGatePacketHandler|null */
-    private $packetHandler;
+    private ?StarGatePacketHandler $packetHandler;
 
     /** @var PingEntry|null */
     private ?PingEntry $pingEntry = null;
